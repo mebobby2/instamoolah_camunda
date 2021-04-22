@@ -8,9 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.camunda.bpm.dmn.engine.DmnDecisionTableResult;
 import org.camunda.bpm.engine.DecisionService;
-import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.ProcessEngines;
 import org.camunda.bpm.engine.variable.VariableMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.camunda.bpm.engine.variable.Variables;
 
 @Component("checkAffordability")
@@ -20,12 +19,12 @@ public class AffordabilityCheck implements JavaDelegate {
     AffordabilityCheck.class
   );
 
+  @Autowired
+  DecisionService decisionService;
+
   @Override
   public void execute(DelegateExecution execution) {
     LOGGER.info("AffordabilityCheck called");
-
-    ProcessEngine engine = ProcessEngines.getDefaultProcessEngine();
-    DecisionService decisionService = engine.getDecisionService();
 
     VariableMap variables = Variables.createVariables()
       .putValue("emailVerified", false)

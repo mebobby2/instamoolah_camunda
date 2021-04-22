@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_14fvexr" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.7.0">
+  <decision id="affordability" name="Affordability">
+    <decisionTable id="DecisionTable_030ypkm" hitPolicy="FIRST">
+      <input id="Input_1" label="Collection Status" camunda:inputVariable="collectionStatus">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>collectionStatus</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_1f13lex">
+          <text>"HARDSHIP","NA","GOOD"</text>
+        </inputValues>
+      </input>
+      <input id="InputClause_1p5ztl1" label="Risk Score" camunda:inputVariable="riskScore">
+        <inputExpression id="LiteralExpression_1rnuqt3" typeRef="integer">
+          <text>riskScore</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1b61bmz" label="Email Verified" camunda:inputVariable="emailVerified">
+        <inputExpression id="LiteralExpression_0lpkp79" typeRef="boolean">
+          <text>emailVerified</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="approval" name="affordabilityApproved" typeRef="boolean" />
+      <rule id="DecisionRule_0sovs1o">
+        <description>Good borrower</description>
+        <inputEntry id="UnaryTests_0xzd8vi">
+          <text>not("HARDSHIP")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1aoynua">
+          <text>&gt;= -100</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vp0kdd">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0bisfjt">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0s90e12">
+        <description>Bad borrower - collection status is not good</description>
+        <inputEntry id="UnaryTests_0rz3tqq">
+          <text>"HARDSHIP"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_130v50y">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gin0ug">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_03y1p3i">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0hc8j5z">
+        <description>Bad borrower - risk score is not good</description>
+        <inputEntry id="UnaryTests_0dbl0j7">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0j5wcqi">
+          <text>&lt; -100</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0nmqzj7">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0nbfnjf">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0knypf0">
+        <description>Bad borrower - email has not been verified</description>
+        <inputEntry id="UnaryTests_1dicprs">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gs3qyb">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1c0xrbu">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0z3uehm">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="affordability">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

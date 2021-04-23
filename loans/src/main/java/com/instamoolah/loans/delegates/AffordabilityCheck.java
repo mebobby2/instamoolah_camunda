@@ -27,8 +27,8 @@ public class AffordabilityCheck implements JavaDelegate {
     LOGGER.info("AffordabilityCheck called");
 
     VariableMap variables = Variables.createVariables()
-      .putValue("emailVerified", false)
-      .putValue("collectionStatus", "HARDSHIP")
+      .putValue("emailVerified", true)
+      .putValue("collectionStatus", "GOOD")
       .putValue("riskScore", 100);
 
     DmnDecisionTableResult dishDecisionResult = decisionService.evaluateDecisionTableByKey("affordability", variables);

@@ -72,7 +72,7 @@
     });
 
     function create(loanRequest) {
-        $.post("/loans", loanRequest, function () {
+        $.post("/engine-rest/process-definition/key/newLoan/start", loanRequest, function () {
             load();
         }, "text");
     }
@@ -116,22 +116,19 @@
               $.each(data, function (key, val) {
                 processDetails.push(getProcessDetail(val.id))
                 $.when.apply($, processDetails).done(function(){
-                  for(var i = 0, len = arguments.length; i < len; i++){
-                      obj.push(arguments[i][0]);
-                  }
-
-                  $.each(arguments, function (element) {
-                    // if (val.completed) {
-                      var data = element[0];
-                      console.log(data)
-                      $("<tr><td>" + val.riskScore + "</td>" +
-                      "<td>" + val.emailVerified + "</td>" +
-                      "<td>" + val.collectionStatus + "</td>" +
-                      "<td>" + val.purpose + "</td>" +
-                      "<td>" + val.amount + "</td>" +
-                      "<td>" + val.status + "</td>" +
-                      "<td></td>" +
-                      "</tr>").appendTo("#content");
+                  $.each(arguments, function (elemIndex, element) {
+											var variables = element.reduce(function(map, obj) {
+												map[obj.name] = obj.value;
+												return map;
+											}, {});
+											$("<tr><td>" + variables.riskScore + "</td>" +
+											"<td>" + variables.emailVerified + "</td>" +
+											"<td>" + variables.collectionStatus + "</td>" +
+											"<td>" + variables.purpose + "</td>" +
+											"<td>" + variables.amount + "</td>" +
+											"<td>" + variables.status + "</td>" +
+											"<td></td>" +
+											"</tr>").appendTo("#content");
                     // } else {
                     // 	$("<tr><td>" + val.riskScore + "</td>" +
                     //   "<td>" + val.emailVerified + "</td>" +
@@ -195,13 +192,14 @@
             productAction.click(function () {
 
 							var loanApplication = {
-								riskScore: $("#riskScore").val(),
-								emailVerified: $("input:radio[name='emailVerified']:checked").attr("data-value"),
-								collectionStatus: $("#collectionStatus").val(),
-								amount: $("#amount").val(),
-								purpose: $("#purpose").val()
+								riskScore: {"value": $("#riskScore").val(), type: "Integer"},
+								emailVerified: {"value": $("input:radio[name='emailVerified']:checked").attr("data-value"), type: "Boolean"},
+								collectionStatus: {"value": $("#collectionStatus").val(), type: "String"},
+								amount: {"value": $("#amount").val(), type: "Integer"},
+								purpose: {"value": $("#purpose").val(), type: "String"},
+								status: {"value": "NEW", type: "String"}
 							}
-            	var loanRequest = JSON.stringify(loanApplication);
+            	var loanRequest = JSON.stringify({"variables": loanApplication});
 
                 create(loanRequest);
                 $('#productModal').modal('toggle');

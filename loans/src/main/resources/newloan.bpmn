@@ -16,13 +16,13 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="newLoan">
-      <bpmndi:BPMNEdge id="Flow_15rtkkw_di" bpmnElement="Flow_15rtkkw">
-        <di:waypoint x="225" y="97" />
-        <di:waypoint x="280" y="97" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_14pfc6y_di" bpmnElement="Flow_14pfc6y">
         <di:waypoint x="380" y="97" />
         <di:waypoint x="442" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15rtkkw_di" bpmnElement="Flow_15rtkkw">
+        <di:waypoint x="225" y="97" />
+        <di:waypoint x="280" y="97" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="189" y="79" width="36" height="36" />

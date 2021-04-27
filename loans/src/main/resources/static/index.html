@@ -245,12 +245,12 @@
             modal.find('.modal-title').text("Tasks");
 
             $("#taskscontent").children().remove();
-            $.getJSON("/tasks/" + id, function (data) {
+            $.getJSON("engine-rest/task?active=true&processInstanceId=" + id, function (data) {
             	$.each(data, function (key, val) {
-								if ("Manual Approval" == val.name) {
+								if ("Manual Approve" == val.name) {
 									$("<tr><td>" + val.name + "</td>" +
 											"<td data-id=" + val.id + ">" +
-											"Wait for approval" +
+											"Waiting for approval" +
 											"</td>" +
 											"</tr>").appendTo("#taskscontent");
 								} else {

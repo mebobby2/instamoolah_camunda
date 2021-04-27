@@ -44,7 +44,8 @@
       <bpmn:extensionElements>
         <camunda:taskListener event="complete">
           <camunda:script scriptFormat="groovy">println 'Manual Approved executed'
-        execution.setVariable('status', 'APPROVED')</camunda:script>
+task.execution.setVariable('status', 'APPROVED')
+</camunda:script>
         </camunda:taskListener>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0513u84</bpmn:incoming>
@@ -57,7 +58,9 @@
       <bpmn:outgoing>Flow_0gvldu1</bpmn:outgoing>
       <bpmn:script>println 'Executing Test Script Task'</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="Flow_0350p1q" sourceRef="Gateway_0sj840e" targetRef="Activity_1e51iyl" />
+    <bpmn:sequenceFlow id="Flow_0350p1q" sourceRef="Gateway_0sj840e" targetRef="Activity_1e51iyl">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${autoApproved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0lz7bcl" sourceRef="Activity_1i8rgdf" targetRef="Activity_1e51iyl" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">

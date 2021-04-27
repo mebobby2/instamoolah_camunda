@@ -6,7 +6,7 @@
 ```
 
 ## API
-Get all running processes
+Complete Tasks
 ```
-curl http://localhost:8080/engine-rest/process-instance
+curl --header "Content-Type: application/json" --request POST --data '{"variables":{"reason":{"value":"good"}}}' http://localhost:8080/engine-rest/task/<taskId>/complete
 ```

@@ -1,24 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1bnkrtv" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.14.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1bnkrtv" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.14.0">
   <bpmn:process id="newLoan" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1" name="Loan Request Received">
       <bpmn:outgoing>Flow_15rtkkw</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_15rtkkw" sourceRef="StartEvent_1" targetRef="Activity_0akk8zm" />
     <bpmn:endEvent id="Event_0hk7r8s" name="Loan Request Accepted">
-      <bpmn:incoming>Flow_14pfc6y</bpmn:incoming>
+      <bpmn:incoming>Flow_1m3sw2c</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_14pfc6y" sourceRef="Activity_0akk8zm" targetRef="Event_0hk7r8s" />
+    <bpmn:sequenceFlow id="Flow_14pfc6y" sourceRef="Activity_0akk8zm" targetRef="Gateway_04p0j6y" />
     <bpmn:serviceTask id="Activity_0akk8zm" name="Check Affordability" camunda:delegateExpression="${checkAffordability}">
       <bpmn:incoming>Flow_15rtkkw</bpmn:incoming>
       <bpmn:outgoing>Flow_14pfc6y</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1m3sw2c" sourceRef="Activity_0vwz1f2" targetRef="Event_0hk7r8s" />
+    <bpmn:serviceTask id="Activity_0vwz1f2" name="Check AutoApprove" camunda:delegateExpression="${checkAutoApprove}">
+      <bpmn:incoming>Flow_102wbro</bpmn:incoming>
+      <bpmn:outgoing>Flow_1m3sw2c</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_04p0j6y">
+      <bpmn:incoming>Flow_14pfc6y</bpmn:incoming>
+      <bpmn:outgoing>Flow_102wbro</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0betxc0</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_102wbro" sourceRef="Gateway_04p0j6y" targetRef="Activity_0vwz1f2">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${affordabilityApproved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_07rykkb" name="Loan Request Rejected">
+      <bpmn:incoming>Flow_0betxc0</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0betxc0" sourceRef="Gateway_04p0j6y" targetRef="Event_07rykkb">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!affordabilityApproved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="newLoan">
+      <bpmndi:BPMNEdge id="Flow_0betxc0_di" bpmnElement="Flow_0betxc0">
+        <di:waypoint x="450" y="122" />
+        <di:waypoint x="450" y="232" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_102wbro_di" bpmnElement="Flow_102wbro">
+        <di:waypoint x="475" y="97" />
+        <di:waypoint x="510" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1m3sw2c_di" bpmnElement="Flow_1m3sw2c">
+        <di:waypoint x="610" y="97" />
+        <di:waypoint x="822" y="97" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_14pfc6y_di" bpmnElement="Flow_14pfc6y">
         <di:waypoint x="380" y="97" />
-        <di:waypoint x="442" y="97" />
+        <di:waypoint x="425" y="97" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_15rtkkw_di" bpmnElement="Flow_15rtkkw">
         <di:waypoint x="225" y="97" />
@@ -31,13 +62,25 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0hk7r8s_di" bpmnElement="Event_0hk7r8s">
-        <dc:Bounds x="442" y="79" width="36" height="36" />
+        <dc:Bounds x="822" y="79" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="426" y="122" width="69" height="27" />
+          <dc:Bounds x="806" y="122" width="69" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0lihk4p_di" bpmnElement="Activity_0akk8zm">
         <dc:Bounds x="280" y="57" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0culov2_di" bpmnElement="Activity_0vwz1f2">
+        <dc:Bounds x="510" y="57" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_04p0j6y_di" bpmnElement="Gateway_04p0j6y" isMarkerVisible="true">
+        <dc:Bounds x="425" y="72" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_07rykkb_di" bpmnElement="Event_07rykkb">
+        <dc:Bounds x="432" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="416" y="275" width="69" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

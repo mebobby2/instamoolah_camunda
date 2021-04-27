@@ -104,8 +104,10 @@
         });
     }
 
-    function getProcessDetail(processId) {
-      return $.getJSON("/engine-rest/history/variable-instance?processInstanceId="+processId);
+    function getProcessDetail(processId, results) {
+      return $.getJSON("/engine-rest/history/variable-instance?processInstanceId="+processId, function(data) {
+				results.push(data);
+			});
     }
 
     function load() {
@@ -114,9 +116,10 @@
           var processDetails = [];
           $.getJSON("/engine-rest/history/process-instance?processDefinitionId="+definitionData[0].id, function (data) {
               $.each(data, function (key, val) {
-                processDetails.push(getProcessDetail(val.id))
+								var results = [];
+                processDetails.push(getProcessDetail(val.id, results))
                 $.when.apply($, processDetails).done(function(){
-                  $.each(arguments, function (elemIndex, element) {
+                  $.each(results, function (elemIndex, element) {
 											var variables = element.reduce(function(map, obj) {
 												map[obj.name] = obj.value;
 												return map;

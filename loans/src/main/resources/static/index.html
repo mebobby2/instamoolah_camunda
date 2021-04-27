@@ -124,34 +124,35 @@
 												map[obj.name] = obj.value;
 												return map;
 											}, {});
-											$("<tr><td>" + variables.riskScore + "</td>" +
-											"<td>" + variables.emailVerified + "</td>" +
-											"<td>" + variables.collectionStatus + "</td>" +
-											"<td>" + variables.purpose + "</td>" +
-											"<td>" + variables.amount + "</td>" +
-											"<td>" + variables.status + "</td>" +
-											"<td></td>" +
-											"</tr>").appendTo("#content");
-                    // } else {
-                    // 	$("<tr><td>" + val.riskScore + "</td>" +
-                    //   "<td>" + val.emailVerified + "</td>" +
-                    //   "<td>" + val.collectionStatus + "</td>" +
-                    //   "<td>" + val.purpose + "</td>" +
-                    //   "<td>" + val.amount + "</td>" +
-                    //   "<td>" + val.status + "</td>" +
-                    // 	"<td>" +
-                    // 	"<button class='btn btn-primary btn-sm' " +
-                    // 	"data-toggle='modal' " +
-                    // 	"data-target='#tasksModal' " +
-                    // 	"data-id='" + val.id + "'>" +
-                    // 	"   <span>Tasks</span>" +
-                    // 	"</button>&nbsp;" +
-                    // 	"<button class='btn btn-danger btn-sm product-delete' data-id='" + val.id + "'>" +
-                    // 	"   <span>Cancel</span>" +
-                    // 	"</button>" +
-                    // 	"</td>" +
-                    // 	"</tr>").appendTo("#content");
-                    // }
+											if (val.state === "COMPLETED") {
+												$("<tr><td>" + variables.riskScore + "</td>" +
+												"<td>" + variables.emailVerified + "</td>" +
+												"<td>" + variables.collectionStatus + "</td>" +
+												"<td>" + variables.purpose + "</td>" +
+												"<td>" + variables.amount + "</td>" +
+												"<td>" + variables.status + "</td>" +
+												"<td></td>" +
+												"</tr>").appendTo("#content");
+											} else {
+												$("<tr><td>" + variables.riskScore + "</td>" +
+												"<td>" + variables.emailVerified + "</td>" +
+												"<td>" + variables.collectionStatus + "</td>" +
+												"<td>" + variables.purpose + "</td>" +
+												"<td>" + variables.amount + "</td>" +
+												"<td>" + variables.status + "</td>" +
+												"<td>" +
+												"<button class='btn btn-primary btn-sm' " +
+												"data-toggle='modal' " +
+												"data-target='#tasksModal' " +
+												"data-id='" + val.id + "'>" +
+												"   <span>Tasks</span>" +
+												"</button>&nbsp;" +
+												"<button class='btn btn-danger btn-sm product-delete' data-id='" + val.id + "'>" +
+												"   <span>Cancel</span>" +
+												"</button>" +
+												"</td>" +
+												"</tr>").appendTo("#content");
+                    }
                   });
               });
               });

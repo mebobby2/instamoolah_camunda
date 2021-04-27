@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_0scxp66" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.7.0">
+  <decision id="autoapprove" name="Auto Approve">
+    <decisionTable id="DecisionTable_15aps1n" hitPolicy="FIRST">
+      <input id="Input_1" label="Loan Amount" camunda:inputVariable="amount">
+        <inputExpression id="InputExpression_1" typeRef="integer">
+          <text>amount</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0l0j0se" label="Loan Purpose" camunda:inputVariable="purpose">
+        <inputExpression id="LiteralExpression_1g3jas8" typeRef="string">
+          <text>purpose</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_0xz4zsk">
+          <text>"BUSINESS","DEBT_CON","RENO","OTHER"</text>
+        </inputValues>
+      </input>
+      <output id="Output_1" label="Auto Approved" name="autoApproved" typeRef="boolean" />
+      <rule id="DecisionRule_13lft71">
+        <description>Loan amounts over $100,000 need to be manually approved</description>
+        <inputEntry id="UnaryTests_0t03afp">
+          <text>&gt;= 100000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0utqmb9">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1h3sd90">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_12tdh2f">
+        <description>Business loans need to be manually approved</description>
+        <inputEntry id="UnaryTests_12mohvm">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gvffc9">
+          <text>"BUSINESS"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1h3pkz2">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1g40gjw">
+        <description>Non business loans less than $100,000 are auto approved</description>
+        <inputEntry id="UnaryTests_12mukao">
+          <text>&lt; 100000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_13k9rp9">
+          <text>"DEBT_CON","RENO","OTHER"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1u3i73c">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="autoapprove">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

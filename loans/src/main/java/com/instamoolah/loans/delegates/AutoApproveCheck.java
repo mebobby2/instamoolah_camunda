@@ -21,6 +21,21 @@ public class AutoApproveCheck implements JavaDelegate {
 
   @Override
   public void execute(DelegateExecution execution) {
+    Map<String, Object> executionVariables = execution.getVariables();
     System.out.println("AutoApproveCheck called");
+    System.out.println(executionVariables);
+
+    DmnDecisionTableResult autoApproveResult = decisionService.evaluateDecisionTableByKey("autoapprove", executionVariables);
+    Boolean autoApproved = autoApproveResult.getSingleEntry();
+
+
+    VariableMap result = Variables.createVariables().putValue("autoApproved", autoApproved);
+
+    if (autoApproved) {
+      result.putValue("status", "APPROVED");
+    }
+    execution.setVariables(result);
+
+    System.out.println(autoApproveResult);
   }
 }

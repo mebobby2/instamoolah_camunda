@@ -25,8 +25,8 @@ public class AffordabilityCheck implements JavaDelegate {
     System.out.println("AffordabilityCheck called");
     System.out.println(executionVariables);
 
-    DmnDecisionTableResult dishDecisionResult = decisionService.evaluateDecisionTableByKey("affordability", executionVariables);
-    Boolean affordabilityApproved = dishDecisionResult.getSingleEntry();
+    DmnDecisionTableResult affordabilityResult = decisionService.evaluateDecisionTableByKey("affordability", executionVariables);
+    Boolean affordabilityApproved = affordabilityResult.getSingleEntry();
 
 
     VariableMap result = Variables.createVariables()
@@ -34,6 +34,6 @@ public class AffordabilityCheck implements JavaDelegate {
     .putValue("status", affordabilityApproved == true ? "AFFORDABILITY_APPROVED" : "REJECTED");
     execution.setVariables(result);
 
-    System.out.println(dishDecisionResult);
+    System.out.println(affordabilityResult);
   }
 }

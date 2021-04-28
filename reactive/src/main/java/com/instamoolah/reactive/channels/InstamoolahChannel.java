@@ -11,4 +11,10 @@ public interface InstamoolahChannel {
 
   @Input("funds-reserved")
 	SubscribableChannel fundsReserved();
+
+  @Output("generate-contract")
+  MessageChannel generateContract();
+
+  @Input("contract-generated")
+	SubscribableChannel contractGenerated();
 }

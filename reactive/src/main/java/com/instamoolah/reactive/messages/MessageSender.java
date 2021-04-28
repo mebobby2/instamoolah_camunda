@@ -34,4 +34,20 @@ public class MessageSender {
       );
     }
   }
+
+  public void generateContract(Message<?> m) {
+    try {
+      String jsonMessage = objectMapper.writeValueAsString(m);
+      output.generateContract().send(
+        MessageBuilder
+          .withPayload(jsonMessage)
+          .setHeader("type", m.getType())
+          .build()
+      );
+    } catch (Exception e) {
+      throw new RuntimeException(
+        "Could not tranform and send message due to: " + e.getMessage()
+      );
+    }
+  }
 }

@@ -7,21 +7,22 @@ import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.stereotype.Component;
+import com.instamoolah.reactive.channels.InstamoolahChannel;
 
 @Component
-@EnableBinding(Source.class)
+@EnableBinding(InstamoolahChannel.class)
 public class MessageSender {
 
   @Autowired
-  private MessageChannel output;
+  private InstamoolahChannel output;
 
   @Autowired
   private ObjectMapper objectMapper;
 
-  public void send(Message<?> m) {
+  public void reserveFunds(Message<?> m) {
     try {
       String jsonMessage = objectMapper.writeValueAsString(m);
-      output.send(
+      output.reserveFunds().send(
         MessageBuilder
           .withPayload(jsonMessage)
           .setHeader("type", m.getType())

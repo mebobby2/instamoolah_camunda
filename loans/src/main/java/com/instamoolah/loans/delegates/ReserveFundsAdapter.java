@@ -21,7 +21,7 @@ public class ReserveFundsAdapter implements JavaDelegate {
     String traceId = execution.getProcessBusinessKey();
     System.out.println("Amount is "+ amount + " and Trace ID is "+traceId);
 
-    messageSender.send(
+    messageSender.reserveFunds(
       new Message<ReserveFundsCommandPayload>(
         "ReserveFundsCommand",
         traceId,

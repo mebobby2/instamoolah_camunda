@@ -112,7 +112,7 @@
 
     function load() {
         $("#content").children().remove();
-        $.getJSON("engine-rest/process-definition?latestVersion=true", function(definitionData) {
+        $.getJSON("engine-rest/process-definition?latestVersion=true&active=true", function(definitionData) {
           var processDetails = [];
           $.getJSON("/engine-rest/history/process-instance?processDefinitionId="+definitionData[0].id, function (data) {
               $.each(data, function (key, val) {

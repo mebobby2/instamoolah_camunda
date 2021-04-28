@@ -13,21 +13,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @EnableBinding(Source.class)
 public class MessageSender {
 
-  @Autowired
-  private MessageChannel output;
+  private MessageChannel reserveFunds;
 
   @Autowired
   private ObjectMapper objectMapper;
 
   public void send(Message<?> m) {
+    String jsonMessage;
     try {
-      // avoid too much magic and transform ourselves
-      String jsonMessage = objectMapper.writeValueAsString(m);
-      // wrap into a proper message for the transport (Kafka/Rabbit) and send it
-      output.send(
-          MessageBuilder.withPayload(jsonMessage).setHeader("type", m.getType()).build());
+
+      jsonMessage = objectMapper.writeValueAsString(m);
+
     } catch (Exception e) {
       throw new RuntimeException("Could not tranform and send message due to: "+ e.getMessage(), e);
     }
+    reserveFunds.send(
+      MessageBuilder.withPayload(jsonMessage).setHeader("type", m.getType()).build());
   }
 }

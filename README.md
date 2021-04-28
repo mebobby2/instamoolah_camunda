@@ -23,3 +23,15 @@ Complete Tasks
 ```
 curl --header "Content-Type: application/json" --request POST --data '{"variables":{"reason":{"value":"good"}}}' http://localhost:8080/engine-rest/task/<taskId>/complete
 ```
+
+## Debugging
+### Kafka
+SSH into Container
+```
+docker exec -it 722ce9687af0 /bin/bash
+```
+
+View messages
+```
+/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic myTopic --from-beginning
+```

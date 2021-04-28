@@ -8,7 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.instamoolah") // So it can packages inside the reactive module as well, which is a library
 @EnableProcessApplication
 public class LoansApplication {
 	@Autowired

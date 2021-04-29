@@ -11,12 +11,12 @@ public interface LoanChannel {
   @Output(RESERVE_FUNDS)
   MessageChannel reserveFunds();
 
-  @Input("funds-reserved")
-	SubscribableChannel fundsReserved();
+  // @Input("funds-reserved")
+	// SubscribableChannel fundsReserved();
 
   @Output("generate-contract")
   MessageChannel generateContract();
 
-  @Input("contract-generated")
-	SubscribableChannel contractGenerated();
+  // @Input("contract-generated")
+	// SubscribableChannel contractGenerated();
 }

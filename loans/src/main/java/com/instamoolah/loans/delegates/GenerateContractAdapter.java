@@ -1,7 +1,8 @@
 package com.instamoolah.loans.delegates;
 
+import com.instamoolah.loans.channels.LoanChannel;
 import com.instamoolah.reactive.messages.GenerateContractCommandPayload;
-import com.instamoolah.loans.messages.MessageSender;
+import com.instamoolah.reactive.pipes.Send;
 import com.instamoolah.reactive.messages.Message;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -12,7 +13,10 @@ import org.springframework.stereotype.Component;
 public class GenerateContractAdapter implements JavaDelegate {
 
   @Autowired
-  private MessageSender messageSender;
+  private Send send;
+
+  @Autowired
+  private LoanChannel channel;
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {
@@ -22,7 +26,7 @@ public class GenerateContractAdapter implements JavaDelegate {
     String traceId = execution.getProcessBusinessKey();
     System.out.println("Amount is "+ amount + " and Trace ID is "+ traceId + " and purpose is "+purpose);
 
-    messageSender.generateContract(
+    send.execute(channel.generateContract(),
       new Message<GenerateContractCommandPayload>(
         "GenerateContractCommand",
         traceId,

@@ -1,4 +1,4 @@
-package com.instamoolah.loans.messages;
+package com.instamoolah.reactive.messages;
 
 public class GenerateContractCommandPayload {
 

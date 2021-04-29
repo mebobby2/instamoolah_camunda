@@ -96,12 +96,9 @@
     }
 
     function completeTask(id, taskName, taskId) {
-			$.ajax({
-            method: "PUT",
-            url: "/tasks/customer/approve/" + taskId
-        }).done(function () {
+			$.post("/engine-rest/task/" + taskId + "/complete", '{"variables":{"reason":{"value":"good"}}}', function () {
             load();
-        });
+        }, "json");
     }
 
     function getProcessDetail(processId, results) {

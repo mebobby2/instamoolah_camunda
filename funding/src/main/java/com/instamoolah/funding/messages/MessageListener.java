@@ -9,9 +9,13 @@ import com.instamoolah.funding.channels.FundingChannel;
 import com.instamoolah.reactive.messages.ReserveFundsCommandPayload;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import com.instamoolah.reactive.messages.Message;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.camunda.bpm.engine.RuntimeService;
 
 @EnableBinding(FundingChannel.class)
 public class MessageListener {
+  @Autowired
+  private RuntimeService runtimeService;
 
 	@StreamListener(FundingChannel.RESERVE_FUNDS)
   public void reserveFundsEvent(Message<ReserveFundsCommandPayload> message) throws JsonParseException, JsonMappingException, IOException {
@@ -19,11 +23,11 @@ public class MessageListener {
 
     System.out.println("Reserve Funds command received. " + command.getAmount());
 
-    // and kick of a new flow instance
-    // camunda.getRuntimeService().createMessageCorrelation(message.getType())
-    //   .processInstanceBusinessKey(message.getTraceid())
-    //   .setVariable("orderId", order.getId())
-    //   .correlateWithResult();
+    runtimeService.createMessageCorrelation(message.getType())
+      .processInstanceBusinessKey(message.getTraceid())
+      .setVariable("amount", command.getAmount())
+      .setVariable("correlationid", message.getCorrelationid())
+      .correlateWithResult();
   }
 
 }

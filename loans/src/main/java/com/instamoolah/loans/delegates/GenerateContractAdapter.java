@@ -21,7 +21,7 @@ public class GenerateContractAdapter implements JavaDelegate {
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {
-    System.out.println("GenerateContractAdapter Adapter executing");
+    System.out.println("GenerateContract Adapter executing");
     Integer amount = (Integer) execution.getVariable("amount");
     String purpose = (String) execution.getVariable("purpose");
     String traceId = execution.getProcessBusinessKey();

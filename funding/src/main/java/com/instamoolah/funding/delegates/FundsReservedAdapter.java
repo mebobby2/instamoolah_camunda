@@ -1,6 +1,6 @@
 package com.instamoolah.loans.delegates;
 
-import com.instamoolah.loans.channels.LoanChannel;
+import com.instamoolah.funding.channels.FundingChannel;
 import com.instamoolah.reactive.messages.Message;
 import com.instamoolah.reactive.messages.ReserveFundsCommandPayload;
 import com.instamoolah.reactive.pipes.Send;
@@ -11,30 +11,30 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public class ReserveFundsAdapter implements JavaDelegate {
+public class FundsReservedAdapter implements JavaDelegate {
 
   @Autowired
   private Send send;
 
   @Autowired
-  private LoanChannel channel;
+  private FundingChannel channel;
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {
-    System.out.println("ReserveFunds Adapter executing");
+    System.out.println("FundsReserved Adapter executing");
     Integer amount = (Integer) execution.getVariable("amount");
+    String correlationid = (String) execution.getVariable("correlationid");
     String traceId = execution.getProcessBusinessKey();
-    System.out.println("Amount is " + amount + " and Trace ID is " + traceId);
 
     send.execute(
-      channel.reserveFunds(),
+      channel.fundsReserved(),
       new Message<ReserveFundsCommandPayload>(
-        "ReserveFundsCommand",
+        "FundsReservedEvent",
         traceId,
         new ReserveFundsCommandPayload().setAmount(amount)
       )
-        .setCorrelationid(UUID.randomUUID().toString())
-        .setSource("loans")
+        .setCorrelationid(correlationid)
+        .setSource("funding")
     );
   }
 }

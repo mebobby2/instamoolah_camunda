@@ -4,19 +4,18 @@ import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.SubscribableChannel;
-
+import com.instamoolah.reactive.pipes.Channels;
 public interface LoanChannel {
-  String RESERVE_FUNDS = "reserve-funds";
 
-  @Output(RESERVE_FUNDS)
+  @Output(Channels.RESERVE_FUNDS)
   MessageChannel reserveFunds();
 
-  // @Input("funds-reserved")
-	// SubscribableChannel fundsReserved();
+  @Input(Channels.FUNDS_RESERVED)
+	SubscribableChannel fundsReserved();
 
-  @Output("generate-contract")
+  @Output(Channels.GENERATE_CONTRACT)
   MessageChannel generateContract();
 
-  // @Input("contract-generated")
-	// SubscribableChannel contractGenerated();
+  @Input(Channels.CONTRACT_GENERATED)
+	SubscribableChannel contractGenerated();
 }

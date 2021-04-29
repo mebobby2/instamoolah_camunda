@@ -10,6 +10,7 @@ import com.instamoolah.reactive.messages.ReserveFundsCommandPayload;
 import com.instamoolah.reactive.messages.GenerateContractCommandPayload;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import com.instamoolah.reactive.messages.Message;
+import com.instamoolah.reactive.pipes.Channels;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.camunda.bpm.engine.RuntimeService;
 
@@ -18,7 +19,7 @@ public class MessageListener {
   @Autowired
   private RuntimeService runtimeService;
 
-	@StreamListener(FundingChannel.RESERVE_FUNDS)
+	@StreamListener(Channels.RESERVE_FUNDS)
   public void reserveFundsEvent(Message<ReserveFundsCommandPayload> message) throws JsonParseException, JsonMappingException, IOException {
     ReserveFundsCommandPayload command = message.getData();
 
@@ -31,7 +32,7 @@ public class MessageListener {
       .correlateWithResult();
   }
 
-	@StreamListener(FundingChannel.GENERATE_CONTRACT)
+	@StreamListener(Channels.GENERATE_CONTRACT)
   public void generatedContractEvent(Message<GenerateContractCommandPayload> message) throws JsonParseException, JsonMappingException, IOException {
     GenerateContractCommandPayload command = message.getData();
 

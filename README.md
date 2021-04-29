@@ -13,7 +13,7 @@ Build dependencies first (from root/parent project directory)
 ./mvnw clean install -Pcamunda-bpm
 ```
 
-Run Application (from loans project directory)
+Run Application (from loans & funding project directory)
 ```
 ./mvnw spring-boot:run -Pcamunda-bpm
 ```

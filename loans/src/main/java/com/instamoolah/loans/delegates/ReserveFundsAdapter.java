@@ -1,7 +1,7 @@
 package com.instamoolah.loans.delegates;
 
 import com.instamoolah.loans.messages.ReserveFundsCommandPayload;
-import com.instamoolah.reactive.messages.MessageSender;
+import com.instamoolah.loans.messages.MessageSender;
 import com.instamoolah.reactive.messages.Message;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;

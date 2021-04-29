@@ -1,4 +1,4 @@
-package com.instamoolah.reactive.messages;
+package com.instamoolah.loans.messages;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,14 +7,15 @@ import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.stereotype.Component;
-import com.instamoolah.reactive.channels.InstamoolahChannel;
+import com.instamoolah.loans.channels.LoanChannel;
+import com.instamoolah.reactive.messages.Message;
 
 @Component
-@EnableBinding(InstamoolahChannel.class)
+@EnableBinding(LoanChannel.class)
 public class MessageSender {
 
   @Autowired
-  private InstamoolahChannel output;
+  private LoanChannel output;
 
   @Autowired
   private ObjectMapper objectMapper;

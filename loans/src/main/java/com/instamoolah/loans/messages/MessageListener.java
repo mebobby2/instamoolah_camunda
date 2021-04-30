@@ -25,6 +25,12 @@ public class MessageListener {
     throws JsonParseException, JsonMappingException, IOException {
     ReserveFundsCommandPayload command = message.getData();
 
+    // long correlatingInstances =runtimeService.createExecutionQuery()
+    // .messageEventSubscriptionName(message.getType())
+    // .processInstanceBusinessKey(message.getTraceid())
+    // .count();
+    // System.out.println("Execution count is. " + correlatingInstances);
+
     System.out.println(
       "Funds Reserved event received. " + command.getAmount()
     );

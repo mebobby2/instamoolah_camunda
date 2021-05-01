@@ -111,7 +111,8 @@
         $("#content").children().remove();
         $.getJSON("engine-rest/process-definition?latestVersion=true&active=true", function(definitionData) {
           var processDetails = [];
-          $.getJSON("/engine-rest/history/process-instance?processDefinitionId="+definitionData[0].id, function (data) {
+					var definition = definitionData.find(({ key }) => { return key === "newLoan" });
+          $.getJSON("/engine-rest/history/process-instance?processDefinitionId="+definition.id, function (data) {
               $.each(data, function (key, val) {
 								var results = [];
                 processDetails.push(getProcessDetail(val.id, results))

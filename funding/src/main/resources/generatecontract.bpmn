@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0dtfk4l" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.14.0">
-  <bpmn:process id="generateContract" name="Generate Contract" isExecutable="true">
+  <bpmn:process id="Process_0aez7fq" isExecutable="true">
     <bpmn:startEvent id="Event_0mtrlus">
       <bpmn:outgoing>Flow_1eq8uq5</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0w7pyiu" messageRef="Message_0atib1w" />
@@ -23,27 +23,27 @@
   <bpmn:message id="Message_0e9lonj" name="ReserveFundsCommand" />
   <bpmn:message id="Message_0atib1w" name="GenerateContractCommand" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="generateContract">
-      <bpmndi:BPMNEdge id="Flow_102gw07_di" bpmnElement="Flow_102gw07">
-        <di:waypoint x="300" y="90" />
-        <di:waypoint x="350" y="90" />
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0aez7fq">
+      <bpmndi:BPMNEdge id="Flow_1rfqrtl_di" bpmnElement="Flow_1rfqrtl">
+        <di:waypoint x="450" y="90" />
+        <di:waypoint x="512" y="90" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1eq8uq5_di" bpmnElement="Flow_1eq8uq5">
         <di:waypoint x="148" y="90" />
         <di:waypoint x="200" y="90" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1rfqrtl_di" bpmnElement="Flow_1rfqrtl">
-        <di:waypoint x="450" y="90" />
-        <di:waypoint x="512" y="90" />
+      <bpmndi:BPMNEdge id="Flow_102gw07_di" bpmnElement="Flow_102gw07">
+        <di:waypoint x="300" y="90" />
+        <di:waypoint x="350" y="90" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Event_0mtrlus_di" bpmnElement="Event_0mtrlus">
-        <dc:Bounds x="112" y="72" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_12c96br_di" bpmnElement="Activity_12c96br">
         <dc:Bounds x="350" y="50" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_01l8867_di" bpmnElement="Event_01l8867">
         <dc:Bounds x="512" y="72" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0mtrlus_di" bpmnElement="Event_0mtrlus">
+        <dc:Bounds x="112" y="72" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0hnh2aw_di" bpmnElement="Activity_1vrygan">
         <dc:Bounds x="200" y="50" width="100" height="80" />

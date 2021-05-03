@@ -25,6 +25,7 @@ public class AffordabilityCheck implements JavaDelegate {
     System.out.println("AffordabilityCheck called");
     System.out.println(executionVariables);
 
+    // Integer crash = 1/0;
     DmnDecisionTableResult affordabilityResult = decisionService.evaluateDecisionTableByKey("affordability", executionVariables);
     Boolean affordabilityApproved = affordabilityResult.getSingleEntry();
 

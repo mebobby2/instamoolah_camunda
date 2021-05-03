@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1bnkrtv" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.14.0">
   <bpmn:process id="newLoan" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1" name="Loan Request Received">
+    <bpmn:startEvent id="StartEvent_1" name="Loan Request Received" camunda:asyncBefore="true">
       <bpmn:extensionElements>
         <camunda:executionListener event="start">
           <camunda:script scriptFormat="groovy">println 'New Loan Start Event listener executed'
@@ -15,12 +15,12 @@ execution.setBusinessKey('loan-'+ UUID.randomUUID().toString())</camunda:script>
       <bpmn:incoming>Flow_0bi4o5j</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_14pfc6y" sourceRef="Activity_0akk8zm" targetRef="Gateway_04p0j6y" />
-    <bpmn:serviceTask id="Activity_0akk8zm" name="Check Affordability" camunda:delegateExpression="${checkAffordability}">
+    <bpmn:serviceTask id="Activity_0akk8zm" name="Check Affordability" camunda:asyncAfter="true" camunda:delegateExpression="${checkAffordability}">
       <bpmn:incoming>Flow_15rtkkw</bpmn:incoming>
       <bpmn:outgoing>Flow_14pfc6y</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_1m3sw2c" sourceRef="Activity_0vwz1f2" targetRef="Gateway_0sj840e" />
-    <bpmn:serviceTask id="Activity_0vwz1f2" name="Check AutoApprove" camunda:delegateExpression="${checkAutoApprove}">
+    <bpmn:serviceTask id="Activity_0vwz1f2" name="Check AutoApprove" camunda:asyncAfter="true" camunda:delegateExpression="${checkAutoApprove}">
       <bpmn:incoming>Flow_102wbro</bpmn:incoming>
       <bpmn:outgoing>Flow_1m3sw2c</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -77,7 +77,7 @@ task.execution.setVariable('status', 'APPROVED')</camunda:script>
       <bpmn:outgoing>Flow_1s8e92w</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:sequenceFlow id="Flow_1cqospq" sourceRef="Gateway_1nzon2m" targetRef="Activity_076rdio" />
-    <bpmn:parallelGateway id="Gateway_1nzon2m">
+    <bpmn:parallelGateway id="Gateway_1nzon2m" camunda:asyncBefore="true">
       <bpmn:incoming>Flow_17vkvxb</bpmn:incoming>
       <bpmn:incoming>Flow_170ocsa</bpmn:incoming>
       <bpmn:outgoing>Flow_1cqospq</bpmn:outgoing>
@@ -115,6 +115,18 @@ task.execution.setVariable('status', 'ACCEPTED')</camunda:script>
   <bpmn:message id="Message_14wcbih" name="ContractGeneratedEvent" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="newLoan">
+      <bpmndi:BPMNEdge id="Flow_170ocsa_di" bpmnElement="Flow_170ocsa">
+        <di:waypoint x="1090" y="520" />
+        <di:waypoint x="1110" y="520" />
+        <di:waypoint x="1110" y="427" />
+        <di:waypoint x="1135" y="427" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17vkvxb_di" bpmnElement="Flow_17vkvxb">
+        <di:waypoint x="1090" y="350" />
+        <di:waypoint x="1110" y="350" />
+        <di:waypoint x="1110" y="427" />
+        <di:waypoint x="1135" y="427" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_011qry1_di" bpmnElement="Flow_011qry1">
         <di:waypoint x="735" y="427" />
         <di:waypoint x="765" y="427" />
@@ -180,22 +192,16 @@ task.execution.setVariable('status', 'ACCEPTED')</camunda:script>
         <di:waypoint x="225" y="427" />
         <di:waypoint x="280" y="427" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_17vkvxb_di" bpmnElement="Flow_17vkvxb">
-        <di:waypoint x="1090" y="350" />
-        <di:waypoint x="1110" y="350" />
-        <di:waypoint x="1110" y="427" />
-        <di:waypoint x="1135" y="427" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_170ocsa_di" bpmnElement="Flow_170ocsa">
-        <di:waypoint x="1090" y="520" />
-        <di:waypoint x="1110" y="520" />
-        <di:waypoint x="1110" y="427" />
-        <di:waypoint x="1135" y="427" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="189" y="409" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="173" y="452" width="69" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0hk7r8s_di" bpmnElement="Event_0hk7r8s">
+        <dc:Bounds x="1142" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1125" y="85" width="69" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0lihk4p_di" bpmnElement="Activity_0akk8zm">
@@ -228,20 +234,14 @@ task.execution.setVariable('status', 'ACCEPTED')</camunda:script>
       <bpmndi:BPMNShape id="Activity_0gmv02s_di" bpmnElement="Activity_1j9lggr">
         <dc:Bounds x="870" y="480" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0fvwv5a_di" bpmnElement="Gateway_0fvwv5a" isMarkerVisible="true">
-        <dc:Bounds x="685" y="402" width="50" height="50" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1eqawuv_di" bpmnElement="Gateway_1nzon2m">
         <dc:Bounds x="1135" y="402" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_14x23x7_di" bpmnElement="Activity_076rdio">
         <dc:Bounds x="1110" y="200" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0hk7r8s_di" bpmnElement="Event_0hk7r8s">
-        <dc:Bounds x="1142" y="122" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1125" y="85" width="69" height="27" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="Gateway_0fvwv5a_di" bpmnElement="Gateway_0fvwv5a" isMarkerVisible="true">
+        <dc:Bounds x="685" y="402" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1t62tiy_di" bpmnElement="Activity_0icq4zb">
         <dc:Bounds x="990" y="310" width="100" height="80" />

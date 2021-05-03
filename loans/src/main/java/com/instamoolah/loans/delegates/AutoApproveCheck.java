@@ -25,9 +25,10 @@ public class AutoApproveCheck implements JavaDelegate {
     System.out.println("AutoApproveCheck called");
     System.out.println(executionVariables);
 
+    // Integer crash = 1/0;
+
     DmnDecisionTableResult autoApproveResult = decisionService.evaluateDecisionTableByKey("autoapprove", executionVariables);
     Boolean autoApproved = autoApproveResult.getSingleEntry();
-
 
     VariableMap result = Variables.createVariables().putValue("autoApproved", autoApproved);
 

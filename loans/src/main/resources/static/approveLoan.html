@@ -1,0 +1,58 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>InstaMoolah Manual Approval</title>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script>
+    $(function () {
+      $.ajaxSetup({
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
+      initSubmit();
+    });
+
+    function initSubmit() {
+      $(".submit-form").unbind().click(function () {
+        completeTask()
+      });
+    }
+
+    function completeTask() {
+      let queryString = window.location.search;
+      let urlParams = new URLSearchParams(queryString);
+      let taskId = urlParams.get('taskId')
+      console.log(taskId);
+      $.post("/engine-rest/task/" + taskId + "/complete", '{"variables":{"reason":{"value":"good"}}}', function () {
+        $('.notification').html("Successfully approved the loan!")
+      }, "json");
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Manually Approve Loan</h1>
+  <h2 class="notification"></h2>
+  <form action="/my-handling-form-page" method="post">
+    <ul>
+      <li>
+        <label for="name">Officer Name:</label>
+        <input type="text" id="name" name="user_name">
+      </li>
+      <li>
+        <label for="msg">Reason:</label>
+        <textarea id="msg" name="approval_message"></textarea>
+      </li>
+    </ul>
+  </form>
+  <button class='btn btn-danger btn-sm submit-form right' style="margin-left: 240px;">Submit</button>
+</body>
+
+</html>

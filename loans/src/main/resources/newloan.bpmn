@@ -46,7 +46,7 @@ execution.setBusinessKey('loan-'+ UUID.randomUUID().toString())</camunda:script>
     <bpmn:sequenceFlow id="Flow_0513u84" sourceRef="Gateway_0sj840e" targetRef="Activity_1i8rgdf">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!autoApproved}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:userTask id="Activity_1i8rgdf" name="Manual Approve" camunda:candidateGroups="creditofficers">
+    <bpmn:userTask id="Activity_1i8rgdf" name="Manual Approve" camunda:formKey="app:approveLoan.html" camunda:candidateGroups="creditofficers">
       <bpmn:extensionElements>
         <camunda:taskListener event="complete">
           <camunda:script scriptFormat="groovy">println 'Manual Approved executed'
